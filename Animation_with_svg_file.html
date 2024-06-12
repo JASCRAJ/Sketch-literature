@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dynamic SVG Stroke Animation</title>
+<style>
+    /* CSS styles for SVG paths */
+    .path {
+        stroke-width: 0.001;
+        stroke: black; /* Visible stroke color */
+        fill-opacity: 0; /* Initially hide fill */
+    }
+
+    /* Make the SVG responsive */
+    svg {
+        width: 50%;
+        height: auto;
+    }
+</style>
+</head>
+<body>
+
+<div id="svgContainer"></div>
+
+<script>
+    // Function to load SVG dynamically
+function loadSVG(url) {
+    return fetch(url)
+        .then(response => response.text())
+        .then(svgData => {
+            const div = document.getElementById('svgContainer');
+            div.innerHTML = svgData;
+
+            const paths = document.querySelectorAll('svg path'); // Moved here
+
+            // Add class "path" to each path
+            paths.forEach(path => {
+                path.classList.add('path');
+            });
+
+            // Inside the DOMContentLoaded event listener
+            console.log("SVG loaded:", paths.length); // Check if paths are selected
+
+            paths.forEach((path, index) => {
+                const length = path.getTotalLength();
+              
+                // Set initial styles
+                path.style.strokeDasharray = length;
+                path.style.strokeDashoffset = length;
+
+                setTimeout(() => {
+                    path.style.strokeDashoffset = 0;
+                    path.style.transition = 'stroke-dashoffset 1s ease-in-out';
+                    setTimeout(() => {
+                        path.style.fillOpacity = 1; // Show fill after stroke animation completes
+                        path.style.transition += ', fill-opacity 0.1s ease-in-out';
+                    }, 10); // Adjust timing to match stroke animation duration
+                }, index * 10); // Adjust timing for staggered animation
+            });
+
+            // Function to resize SVG to fit the window
+            // Function to resize SVG to fit the window
+            function resizeSVG() {
+                const svg = document.querySelector('#svgContainer svg'); // Select the SVG element inside the container
+                const bbox = svg.getBBox();
+                const viewBox = [bbox.x, bbox.y, bbox.width * 2, bbox.height * 2].join(' ');
+                svg.setAttribute('viewBox', viewBox);
+            }
+
+            window.addEventListener('resize', resizeSVG);
+            resizeSVG(); // Initial call to fit SVG on page load
+
+            return svgData; // Return SVG data for chaining promises
+        });
+}
+
+// Load SVG
+loadSVG('Naked_MalewithArmsRaised_accumulated_clusters_2_78.svg')
+    .catch(error => console.error('Error loading SVG:', error));
+
+</script>
+
+</body>
+</html>
