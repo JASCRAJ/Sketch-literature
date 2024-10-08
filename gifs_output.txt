@@ -3,3 +3,4 @@ https://drive.google.com/drive/folders/1AytTAxX8lh_eZ0AF58yRAkJBBWbQ8k2T
 https://drive.google.com/file/d/1AiYRL2XZ63vzkETmt1MTB0FAPqKVO4lL/view?usp=sharing
 
 'https://github.com/danielgatis/rembg/releases/download/v0.0.0/u2net.onnx
+https://docs.google.com/presentation/d/1PVTLTak7lE4eiMLIWnbVWi2t2dXgfpxO/edit?usp=sharing&ouid=104304795277874819740&rtpof=true&sd=true
